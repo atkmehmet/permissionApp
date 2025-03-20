@@ -27,6 +27,7 @@ fun PermissionScreen() {
         Manifest.permission.ACCESS_WIFI_STATE
     )
 
+   val language =   ContextCompat.getContextForLanguage(context);
     // Track permission status
     var permissionsGranted by remember {
         mutableStateOf(permissions.all {
