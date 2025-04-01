@@ -19,7 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PermissionAppTheme {
-               PermissionScreen()
+              // PermissionScreen()
+                Screen()
             }
         }
     }
