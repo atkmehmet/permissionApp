@@ -1,10 +1,4 @@
 package com.example.permissionapp
-
-
-
-
-
-
 sealed class Sonuc<T>(
     val data: T? = null,
     val message: String? = null
