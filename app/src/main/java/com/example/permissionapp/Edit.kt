@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -47,8 +48,11 @@ fun OzellestirilmisVeriAlani(
             placeholder = { Text(placeholder) },
             leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null) },
             trailingIcon = {
-                if (isFocused) {
-                    Icon(Icons.Default.Close, contentDescription = null)
+                if (isFocused && value.isNotEmpty()) {
+
+                    IconButton(onClick = { onValueChange("") }) {
+                        Icon(Icons.Default.Close, contentDescription = "Temizle")
+                    }
                 }
             },
             isError = isError,
