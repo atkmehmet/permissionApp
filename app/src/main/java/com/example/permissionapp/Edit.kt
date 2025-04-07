@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun OzellestirilmisVeriAlani(
+fun addEdt(
     value: String,
     onValueChange: (String) -> Unit,
     label: String = "Veri",

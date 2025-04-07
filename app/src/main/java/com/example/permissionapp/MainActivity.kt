@@ -25,14 +25,7 @@ class MainActivity : ComponentActivity() {
             PermissionAppTheme {
               // PermissionScreen()
                 //Screen()
-                var veri by remember { mutableStateOf("") }
-
-                OzellestirilmisVeriAlani(
-                    value = veri,
-                    onValueChange = { veri = it },
-                    label = "Adınızı girin",
-                    helperText = "Lütfen tam adınızı yazın"
-                )
+              mainScreen()
             }
         }
     }
