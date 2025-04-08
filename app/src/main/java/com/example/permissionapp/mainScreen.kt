@@ -50,5 +50,7 @@ fun mainScreen(){
             helperText = "Geçerli bir e-posta girin",
             modifier = ortakInputModifier
         )
+
+        DatePickerTextField()
     }
 }
