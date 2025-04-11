@@ -51,6 +51,6 @@ fun mainScreen(){
             modifier = ortakInputModifier
         )
 
-        DatePickerTextField()
+        TimePickerTextField()
     }
 }
