@@ -25,7 +25,8 @@ class MainActivity : ComponentActivity() {
             PermissionAppTheme {
               // PermissionScreen()
                 //Screen()
-              mainScreen()
+              //mainScreen()
+                DatePickerExamples()
             }
         }
     }
