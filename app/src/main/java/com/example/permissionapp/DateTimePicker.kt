@@ -103,6 +103,7 @@ fun DatePickerExamples() {
         } else {
             Text("No date selected")
         }
+
 // [START_EXCLUDE]
 
         Text("Date range pickers:")

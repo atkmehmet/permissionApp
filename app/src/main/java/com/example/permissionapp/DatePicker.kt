@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,12 +35,16 @@ fun myDatePicker(){
 
     }
     val datePickerState = rememberDatePickerState()
-    val selectedDate = datePickerState.selectedDateMillis?.let {
-        convertMillisToTime(it)
-    }?:""
+    var selectedDate by remember { mutableStateOf<Long?>(null) }
+    var formattedDate =""
+
+    if (selectedDate != null) {
+        val date = Date(selectedDate!!)
+         formattedDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date)
+    }
 
     Box (modifier = Modifier.fillMaxWidth()){
-        OutlinedTextField(value = selectedDate,
+        OutlinedTextField(value = formattedDate ,
             onValueChange = {}
         , label = { Text(text = "DOB")}
         , readOnly = true,
@@ -56,19 +62,41 @@ fun myDatePicker(){
 
     if (showModal){
 
+        datePickerShow(
+            onDateSelected = {
+                selectedDate = it
+                showModal = false
+            },
+            onDismiss = { showModal = false }
+        )
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun datePickerShow(
-    onSelectedDate:(Long?)->Unit,
-    onDissmis:()->Unit
-){
-  val datePickerSelectd = rememberDatePickerState()
-    
+    onDateSelected: (Long?) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val datePickerState = rememberDatePickerState()
+
     DatePickerDialog(
-        on
-    )
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = {
+                onDateSelected(datePickerState.selectedDateMillis)
+                onDismiss()
+            }) {
+                Text("OK")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    ) {
+        DatePicker(state = datePickerState)
+    }
 }
 
 fun convertMillisToTime(millis: Long): String {
