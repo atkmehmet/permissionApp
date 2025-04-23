@@ -107,3 +107,10 @@ fun addEdt(
         )
     }
 }
+@Composable
+fun dateTimePicker(){
+    var showModal by remember {
+        mutableStateOf(false)
+    }
+
+}
