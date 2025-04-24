@@ -26,8 +26,8 @@ class MainActivity : ComponentActivity() {
               // PermissionScreen()
                 //Screen()
               //mainScreen()
-                //DatePickerExamples()
-                myDatePicker()
+                DatePickerExamples()
+               // myDatePicker()
             }
         }
     }

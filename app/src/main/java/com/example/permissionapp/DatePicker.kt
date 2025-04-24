@@ -4,10 +4,12 @@ import android.app.DatePickerDialog
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -15,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -100,6 +103,105 @@ fun datePickerShow(
 }
 
 fun convertMillisToTime(millis: Long): String {
-    val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+    val formatter = SimpleDateFormat("dd/mm/yyyy", Locale.getDefault())
     return formatter.format(Date(millis))
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun datePickerRange(){
+
+    var selectedDateRange by remember { mutableStateOf<Pair<Long?, Long?>>(null to null) }
+
+    var modalModalRange by remember {
+        mutableStateOf(false)
+    }
+    var dateRange = ""
+
+    if (selectedDateRange.first != null && selectedDateRange.second != null) {
+        val startDate = Date(selectedDateRange.first!!)
+        val endDate = Date(selectedDateRange.second!!)
+        val formattedStartDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(startDate)
+        val formattedEndDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(endDate)
+            dateRange = "$formattedStartDate-$formattedEndDate"
+    }
+
+    Box (modifier = Modifier.fillMaxWidth()){
+
+        OutlinedTextField(value = dateRange,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(text = "Please Choose Date Range")},
+            trailingIcon = {
+                IconButton(onClick = { modalModalRange = !modalModalRange }) {
+                    Icon(imageVector =Icons.Default.DateRange , contentDescription = "Select date Range")
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+                .height(64.dp)
+        )
+    }
+
+    if (modalModalRange) {
+        DateRangePickerModal(
+            onDateRangeSelected = {
+                selectedDateRange = it
+                modalModalRange = false
+            },
+            onDismiss = { modalModalRange = false }
+        )
+    }
+}
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+// [START android_compose_components_datepicker_range]
+@Composable
+fun DateRangePicker(
+    onDateRangeSelected: (Pair<Long?, Long?>) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val dateRangePickerState = rememberDateRangePickerState()
+
+    DatePickerDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onDateRangeSelected(
+                        Pair(
+                            dateRangePickerState.selectedStartDateMillis,
+                            dateRangePickerState.selectedEndDateMillis
+                        )
+                    )
+                    onDismiss()
+                }
+            ) {
+                Text("OK")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    ) {
+        DateRangePicker(
+            state = dateRangePickerState,
+            title = {
+                Text(
+                    text = "Select date range"
+                )
+            },
+            showModeToggle = false,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(500.dp)
+                .padding(16.dp)
+        )
+    }
+}
+// [END android_compose_components_datepicker_range]
+
