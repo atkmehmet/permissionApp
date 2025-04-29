@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                 //Screen()
               //mainScreen()
                 DatePickerExamples()
-               // myDatePicker()
+               myDatePicker()
             }
         }
     }
