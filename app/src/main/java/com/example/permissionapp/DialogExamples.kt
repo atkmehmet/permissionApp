@@ -57,8 +57,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 
-@Preview
-// [START android_compose_components_dialogparent]
 @Composable
 fun DialogExamples() {
     // [START_EXCLUDE]
@@ -161,9 +159,6 @@ fun MinimalDialog(onDismissRequest: () -> Unit) {
         }
     }
 }
-// [END android_compose_components_minimaldialog]
-
-// [START android_compose_components_dialogwithimage]
 @Composable
 fun DialogWithImage(
     onDismissRequest: () -> Unit,
