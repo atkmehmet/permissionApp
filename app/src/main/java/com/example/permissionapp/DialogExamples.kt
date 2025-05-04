@@ -49,7 +49,7 @@ fun DialogExamples() {
     val openFullScreenDialog = remember { mutableStateOf(false) }
     // [END_EXCLUDE]
     val openAlertDialog = remember { mutableStateOf(false) }
-
+    val openDialogComposable = remember { mutableStateOf(false) }
     // [START_EXCLUDE]
     Column(
         modifier = Modifier
@@ -78,6 +78,9 @@ fun DialogExamples() {
             onClick = { openFullScreenDialog.value = !openFullScreenDialog.value }
         ) {
             Text("Full screen dialog")
+        }
+        Button(onClick = { openDialogComposable.value = !openDialogComposable.value }) {
+            Text("Dialog Composable")
         }
 
         // [END_EXCLUDE]
@@ -116,6 +119,16 @@ fun DialogExamples() {
                     dialogText = "This is an example of an alert dialog with buttons.",
                     icon = Icons.Default.Info
                 )
+            }
+            openDialogComposable.value ->{
+                DialogComposable(
+                    onDismissRequest = { openDialogComposable.value = false },
+                    onConfirmation = { openDialogComposable.value = false },
+                    dialogTitle = "My Dialog Function",
+                    dialogText = "Pleas add composable"
+                ) {
+                    addEdt(value = "", onValueChange = {})
+                }
             }
         }
     }
