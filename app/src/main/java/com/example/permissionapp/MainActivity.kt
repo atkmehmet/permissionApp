@@ -28,7 +28,9 @@ class MainActivity : ComponentActivity() {
               //mainScreen()
               //  DatePickerExamples()
                //myDatePicker()
-                DialogExamples()
+              //  DialogExamples()
+               // MenusExamples()
+                TimePickerExamples()
             }
         }
     }
