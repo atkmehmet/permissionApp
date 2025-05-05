@@ -2,11 +2,13 @@ package com.example.permissionapp
 
 import android.app.DatePickerDialog
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
@@ -16,8 +18,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TimeInput
+import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDateRangePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,24 +31,35 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun myDatePicker(){
-    var showModal by remember {
-
-    mutableStateOf(false)
-
-    }
+    var showModal by remember { mutableStateOf(false) }
+    var showTimeInput by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
+
+    var selectedTime :TimePickerState? by remember { mutableStateOf(null) }
+    val formatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
     var selectedDate by remember { mutableStateOf<Long?>(null) }
     var formattedDate =""
-
+    var timeFormet = ""
     if (selectedDate != null) {
         val date = Date(selectedDate!!)
          formattedDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date)
+    }
+
+    if (selectedTime != null) {
+        val cal = Calendar.getInstance()
+        cal.set(Calendar.HOUR_OF_DAY, selectedTime!!.hour)
+        cal.set(Calendar.MINUTE, selectedTime!!.minute)
+        cal.isLenient = false
+        timeFormet=  formatter.format(cal.time)
+    } else {
+        timeFormet = "No time selected."
     }
 
     Box (modifier = Modifier.fillMaxWidth()){
@@ -61,6 +77,19 @@ fun myDatePicker(){
                 .height(64.dp)
         )
 
+        OutlinedTextField(value = timeFormet ,
+            onValueChange = {}
+            , label = { Text(text = "Time")}
+            , readOnly = true,
+            trailingIcon = {
+                IconButton(onClick = { showTimeInput = !showTimeInput }) {
+                    Icon(imageVector =Icons.Default.DateRange , contentDescription = "Select Time")
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(64.dp)
+        )
     }
 
     if (showModal){
@@ -73,7 +102,66 @@ fun myDatePicker(){
             onDismiss = { showModal = false }
         )
     }
+    if (showTimeInput){
+
+        InputUseState(onConfirm = {time->
+            selectedTime = time
+            showTimeInput = false
+        }) {
+            showTimeInput = false
+        }
+    }
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+// [START android_compose_components_input_usestate]
+@Composable
+fun InputUseState(
+    onConfirm: (TimePickerState) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val currentTime = Calendar.getInstance()
+
+    val timePickerState = rememberTimePickerState(
+        initialHour = currentTime.get(Calendar.HOUR_OF_DAY),
+        initialMinute = currentTime.get(Calendar.MINUTE),
+        is24Hour = true,
+    )
+
+    Column {
+        TimeInput(
+            state = timePickerState,
+        )
+        Button(onClick = onDismiss) {
+            Text("Dismiss picker")
+        }
+        Button(onClick = { onConfirm(timePickerState) }) {
+            Text("Confirm selection")
+        }
+    }
+}
+// [END android_compose_components_input_usestate]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun datePickerShow(
@@ -138,7 +226,8 @@ fun datePickerRange(){
                     Icon(imageVector =Icons.Default.DateRange , contentDescription = "Select date Range")
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(64.dp)
         )
     }

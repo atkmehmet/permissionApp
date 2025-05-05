@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity() {
                //myDatePicker()
               //  DialogExamples()
                // MenusExamples()
-                TimePickerExamples()
+               // TimePickerExamples()
+                myDatePicker()
             }
         }
     }
