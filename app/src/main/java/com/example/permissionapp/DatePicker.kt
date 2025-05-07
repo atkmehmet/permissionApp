@@ -62,7 +62,7 @@ fun myDatePicker(){
         timeFormet = "No time selected."
     }
 
-    Box (modifier = Modifier.fillMaxWidth()){
+    Column (modifier = Modifier.fillMaxWidth()){
         OutlinedTextField(value = formattedDate ,
             onValueChange = {}
         , label = { Text(text = "DOB")}
