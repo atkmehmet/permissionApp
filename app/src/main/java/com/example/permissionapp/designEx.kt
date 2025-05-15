@@ -323,7 +323,7 @@ private fun ScopedModifiers1() {
     Column(/*...*/) {
         val reusableItemModifier = Modifier
             .padding(bottom = 12.dp)
-            // Align Modifier.Element requires a ColumnScope
+                 // Align Modifier.Element requires a ColumnScope
             .align(Alignment.CenterHorizontally)
             .weight(1f)
         Text1(
