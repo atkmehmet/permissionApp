@@ -92,7 +92,7 @@ fun myDatePicker(){
     {
         OutlinedTextField(value = formattedDate ,
             onValueChange = {}
-            , label = { Text(text = "DOB")}
+            , label = { Text(text = "Lesson Date")}
             , readOnly = true,
             trailingIcon = {
                 IconButton(onClick = { showModal = !showModal }) {
@@ -107,7 +107,7 @@ fun myDatePicker(){
 
         OutlinedTextField(value = timeFormet ,
             onValueChange = {}
-            , label = { Text(text = "Time")}
+            , label = { Text(text = "Lesson Starting Time")}
             , readOnly = true,
             trailingIcon = {
                 IconButton(onClick = { showTimeInput = !showTimeInput }) {
@@ -124,13 +124,10 @@ fun myDatePicker(){
             label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, fieldWidth = 200.dp, modifier = Modifier.align(Alignment.Start))
         addEdt(value = hourPrice, onValueChange = {  new -> hourPrice = new},
             label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true, fieldWidth = 200.dp, modifier = Modifier.align(Alignment.Start))
+        addEdt(value = totalPrice, onValueChange = { },
+            label = "Total of Price", placeholder = "", numericOnly = true)
 
-        addEdt(value = customerHour, onValueChange = {  new -> customerHour = new},
-            label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, fieldWidth = 200.dp)
-     }
-    addEdt(value = totalPrice, onValueChange = { },
-        label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, fieldWidth = 200.dp)
-
+    }
     if (showModal){
 
         datePickerShow(
