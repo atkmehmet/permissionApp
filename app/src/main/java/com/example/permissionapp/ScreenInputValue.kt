@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.time.times
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,6 +49,18 @@ fun myDatePicker(){
 
     var valueName by remember {
         mutableStateOf("")
+    }
+    var valueSurName by remember {
+        mutableStateOf("")
+    }
+    var customerHour by remember {
+        mutableStateOf("")
+    }
+    var hourPrice by remember {
+        mutableStateOf("")
+    }
+    var totalPrice by remember {
+        mutableStateOf("0")
     }
 
     var selectedTime :TimePickerState? by remember { mutableStateOf(null) }
@@ -69,6 +82,7 @@ fun myDatePicker(){
     } else {
         timeFormet = "No time selected."
     }
+    totalPrice = ((hourPrice?.toDoubleOrNull() ?: 0.0) * (customerHour?.toDoubleOrNull() ?: 0.0)).toString()
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -104,9 +118,18 @@ fun myDatePicker(){
                 .fillMaxWidth()
                 .height(64.dp)
         )
-        addEdt(value = valueName, onValueChange = {  new -> valueName = new})
+        addEdt(value = valueName, onValueChange = {  new -> valueName = new}, label = "Customer Name", placeholder = "Write Customer Name")
+        addEdt(value = valueSurName, onValueChange = {  new -> valueSurName = new}, label = "Customer SurName", placeholder = "Write Customer SurName")
+        addEdt(value = customerHour, onValueChange = {  new -> customerHour = new},
+            label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, fieldWidth = 200.dp, modifier = Modifier.align(Alignment.Start))
+        addEdt(value = hourPrice, onValueChange = {  new -> hourPrice = new},
+            label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true, fieldWidth = 200.dp, modifier = Modifier.align(Alignment.Start))
 
-    }
+        addEdt(value = customerHour, onValueChange = {  new -> customerHour = new},
+            label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, fieldWidth = 200.dp)
+     }
+    addEdt(value = totalPrice, onValueChange = { },
+        label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, fieldWidth = 200.dp)
 
     if (showModal){
 

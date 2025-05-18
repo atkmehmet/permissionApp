@@ -38,12 +38,15 @@ import androidx.compose.ui.platform.LocalContext
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 
@@ -57,7 +60,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-
 @Composable
 fun addEdt(
     value: String,
@@ -66,18 +68,30 @@ fun addEdt(
     placeholder: String = "Bir şeyler yazın...",
     helperText: String = "",
     maxChar: Int = 50,
+    numericOnly: Boolean = false,
+    fieldWidth: Dp = Dp.Unspecified, // 👈 New parameter
     modifier: Modifier = Modifier
 ) {
     val isError = value.length > maxChar
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
 
+    val fieldModifier = if (fieldWidth != Dp.Unspecified) {
+        Modifier.width(fieldWidth)
+    } else {
+        Modifier.fillMaxWidth()
+    }
+
     Column(modifier = modifier) {
         OutlinedTextField(
             value = value,
             onValueChange = {
-                if (it.length <= maxChar) {
-                    onValueChange(it)
+                var newValue = it
+                if (numericOnly) {
+                    newValue = newValue.filter { char -> char.isDigit() }
+                }
+                if (newValue.length <= maxChar) {
+                    onValueChange(newValue)
                 }
             },
             label = { Text(label) },
@@ -85,7 +99,6 @@ fun addEdt(
             leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null) },
             trailingIcon = {
                 if (isFocused && value.isNotEmpty()) {
-
                     IconButton(onClick = { onValueChange("") }) {
                         Icon(Icons.Default.Close, contentDescription = "Temizle")
                     }
@@ -94,8 +107,10 @@ fun addEdt(
             isError = isError,
             interactionSource = interactionSource,
             singleLine = true,
-
-            modifier = Modifier.fillMaxWidth()
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = if (numericOnly) KeyboardType.Number else KeyboardType.Text
+            ),
+            modifier = fieldModifier
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -107,6 +122,7 @@ fun addEdt(
         )
     }
 }
+
 @Composable
 fun dateTimePicker(){
     var showModal by remember {
