@@ -2,16 +2,23 @@ package com.example.permissionapp
 
 
 import android.app.DatePickerDialog
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
@@ -33,6 +40,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -120,10 +128,15 @@ fun myDatePicker(){
         )
         addEdt(value = valueName, onValueChange = {  new -> valueName = new}, label = "Customer Name", placeholder = "Write Customer Name")
         addEdt(value = valueSurName, onValueChange = {  new -> valueSurName = new}, label = "Customer SurName", placeholder = "Write Customer SurName")
-        addEdt(value = customerHour, onValueChange = {  new -> customerHour = new},
-            label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, fieldWidth = 200.dp, modifier = Modifier.align(Alignment.Start))
-        addEdt(value = hourPrice, onValueChange = {  new -> hourPrice = new},
-            label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true, fieldWidth = 200.dp, modifier = Modifier.align(Alignment.Start))
+        Row (modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            addEdt(value = customerHour, onValueChange = {  new -> customerHour = new},
+                label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true)
+            addEdt(value = hourPrice, onValueChange = {  new -> hourPrice = new},
+                label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true)
+
+        }
+
         addEdt(value = totalPrice, onValueChange = { },
             label = "Total of Price", placeholder = "", numericOnly = true)
 
@@ -165,15 +178,35 @@ fun InputUseState(
         is24Hour = true,
     )
 
-    Column {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.LightGray),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,) {
         TimeInput(
             state = timePickerState,
         )
-        Button(onClick = onDismiss) {
-            Text("Dismiss picker")
-        }
-        Button(onClick = { onConfirm(timePickerState) }) {
-            Text("Confirm selection")
+        Row (modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center){
+
+            Button(
+                onClick = { onConfirm(timePickerState) },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Green,       // Button background
+                    contentColor = Color.White           // Text/icon color
+                )
+            ) {
+               Icon(imageVector = Icons.Default.Check, contentDescription = "Confirm" )
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+
+            Button(onClick = onDismiss,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.White
+                )) {
+                Icon(imageVector = Icons.Default.Close, contentDescription = "Close")
+            }
         }
     }
 }
@@ -212,12 +245,18 @@ fun datePickerShow(
             TextButton(onClick = {
                 onDateSelected(datePickerState.selectedDateMillis)
                 onDismiss()
-            }) {
+            }, colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Green,
+                contentColor   = Color.White
+            )) {
                 Text("OK")
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = onDismiss, colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red,
+                contentColor   = Color.White
+            )) {
                 Text("Cancel")
             }
         }
