@@ -131,9 +131,9 @@ fun myDatePicker(){
         Row (modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
             addEdt(value = customerHour, onValueChange = {  new -> customerHour = new},
-                label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true)
+                label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, modifier = Modifier.weight(1f))
             addEdt(value = hourPrice, onValueChange = {  new -> hourPrice = new},
-                label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true)
+                label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true, modifier = Modifier.weight(1f))
 
         }
 
