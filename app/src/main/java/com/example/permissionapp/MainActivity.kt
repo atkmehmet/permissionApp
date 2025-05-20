@@ -24,14 +24,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             PermissionAppTheme {
               // PermissionScreen()
-                //Screen()
-               Screen()
               //  DatePickerExamples()
-               //myDatePicker()
-              //  DialogExamples()
-               // MenusExamples()
-               // TimePickerExamples()
-           //     myDatePicker()
+                //myDatePicker()
+                // TimePickerExamples()
+                //Screen()
+                // MenusExamples()
+                    mainScreen()
+                //  DialogExamples()
+                //     myDatePicker()
 
             }
         }
