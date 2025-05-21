@@ -1,10 +1,13 @@
 package com.example.permissionapp
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,54 +21,65 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun mainScreen() {
-    val data = listOf(
-        "Row 1 Col 1", "Row 1 Col 2", "Row 1 Col 3",
-        "Row 2 Col 1", "Row 2 Col 2", "Row 2 Col 3"
-    )
-val openDialog = remember {
-    mutableStateOf(false)
-}
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3), // 3 columns
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        items(data) { item ->
-            Text(
-                text = item,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable { openDialog.value = !openDialog.value }
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
+@Composable
+fun mainScreen(){
+    val persons = listOf(
+        Person(1, "Alice"),
+        Person(2, "Bob"),
+        Person(3, "Charlie")
+
+    )
+    PersonGridWithDialog(persons)
+}
+
+data class Person(val id: Int, val name: String)
+@Composable
+fun PersonGridWithDialog(people: List<Person>) {
+    var selectedPerson by remember { mutableStateOf<Person?>(null) }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier.fillMaxSize().padding(8.dp)
+        ) {
+            items(people) { person ->
+                Column(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .clickable { selectedPerson = person }
+                ) {
+                    Text(text = "Name: ${person.name}")
+                    Text(text = "ID: ${person.id}")
+                }
+            }
+        }
+
+        // Show dialog if a person is selected
+        selectedPerson?.let { person ->
+            ScreenDialog(
+                person = person,
+                onDismissRequest = { selectedPerson = null }
             )
         }
 
     }
-    if (openDialog.value){
-
-        ScreenDialog (onDismissRequest = {openDialog.value = false})
-    }
 }
-
-// [START android_compose_components_fullscreendialog]
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ScreenDialog(onDismissRequest: () -> Unit) {
+fun ScreenDialog(onDismissRequest: () -> Unit, person: Person) {
     Dialog(
-        onDismissRequest = { onDismissRequest() },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false,
-            dismissOnBackPress = true,
-        ),
+        onDismissRequest = onDismissRequest,
+        properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnBackPress = true)
     ) {
         Surface(
             modifier = Modifier
@@ -73,22 +87,17 @@ fun ScreenDialog(onDismissRequest: () -> Unit) {
                 .background(MaterialTheme.colorScheme.surfaceVariant),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = "This is a full screen dialog",
-                    textAlign = TextAlign.Center,
-                )
-                TextButton(onClick = { onDismissRequest() }) {
+                Text(text = person.name, textAlign = TextAlign.Center)
+                TextButton(onClick = onDismissRequest) {
                     Text("Dismiss")
                 }
-                addEdt(value = "EXX", onValueChange ={} )
+                addEdt(value = person.id.toString(), onValueChange = {})
                 addEdt(value = "EXX2", onValueChange = {})
             }
         }
     }
 }
-
