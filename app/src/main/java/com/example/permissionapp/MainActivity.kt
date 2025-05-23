@@ -27,11 +27,11 @@ class MainActivity : ComponentActivity() {
               //  DatePickerExamples()
                 //myDatePicker()
                 // TimePickerExamples()
-                //Screen()
+                //screen()
                 // MenusExamples()
                     mainScreen()
-                //  DialogExamples()
-                //     myDatePicker()
+                 //  DialogExamples()
+                    myDatePicker()
 
             }
         }
