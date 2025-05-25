@@ -22,6 +22,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
+            val db = MeetingDatabase.getDatabase(this)
+            val dao =db.meetingDao()
             PermissionAppTheme {
               // PermissionScreen()
               //  DatePickerExamples()
@@ -29,9 +32,9 @@ class MainActivity : ComponentActivity() {
                 // TimePickerExamples()
                 //screen()
                 // MenusExamples()
-                    mainScreen()
+                 //   mainScreen()
                  //  DialogExamples()
-                    myDatePicker()
+                    myDatePicker(dao)
 
             }
         }

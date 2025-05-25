@@ -2,6 +2,7 @@ package com.example.permissionapp
 
 
 import android.app.DatePickerDialog
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,19 +42,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.coroutines.coroutineContext
 import kotlin.time.times
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun myDatePicker(){
+fun myDatePicker(dao: MeetingDao){
     var showModal by remember { mutableStateOf(false) }
     var showTimeInput by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
+    val context = LocalContext.current
 
     var valueName by remember {
         mutableStateOf("")
@@ -139,6 +147,32 @@ fun myDatePicker(){
 
         addEdt(value = totalPrice, onValueChange = { },
             label = "Total of Price", placeholder = "", numericOnly = true)
+
+        Button(onClick = {
+            CoroutineScope(Dispatchers.IO).launch{
+                try {
+
+                    dao.insertMeeting(Meeting(
+                        name = valueName,
+                        surname = valueSurName,
+                        dateMeeting = formattedDate,
+                        meetingDuration = customerHour,
+                        meetingStartTime = timeFormet,
+                        hourPrice = hourPrice
+                    ))
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Saved Meeting", Toast.LENGTH_LONG).show()
+                    }
+                }
+                catch (ex:Exception){
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Error: ${ex.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }, modifier = Modifier.align(Alignment.End)) {
+            Text(text = "Save Meeting")
+        }
 
     }
     if (showModal){

@@ -7,8 +7,8 @@ import androidx.room.Query
 @Dao
 interface MeetingDao {
     @Insert
-    fun insertMeeting(meeting: Meeting)
+  suspend  fun insertMeeting(meeting: Meeting)
 
     @Query("SELECT * FROM Meeting")
-    fun MeetingAll():List<Meeting>
+  suspend  fun MeetingAll():List<Meeting>
 }
