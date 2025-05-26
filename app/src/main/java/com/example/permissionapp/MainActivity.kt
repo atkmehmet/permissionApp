@@ -32,9 +32,13 @@ class MainActivity : ComponentActivity() {
                 // TimePickerExamples()
                 //screen()
                 // MenusExamples()
-                    mainScreen()
+
+                val db = MeetingDatabase.getDatabase(this)
+                val meetingDao = db.meetingDao()
+                val viewModel = MeetingView(meetingDao)
+                    mainScreen(viewModel,meetingDao)
                  //  DialogExamples()
-                    myDatePicker(dao)
+                            //     myDatePicker(dao)
 
             }
         }

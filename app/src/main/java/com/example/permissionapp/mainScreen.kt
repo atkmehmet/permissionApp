@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,43 +36,50 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun mainScreen(dao: MeetingDao){
+fun mainScreen(view: MeetingView,meetingDao: MeetingDao){
 
-    PersonGridWithDialog(dao)
+    PersonGridWithDialog(view.meeting.collectAsState().value,meetingDao)
 }
 
 data class Person(val id: Int, val name: String)
 @Composable
-fun PersonGridWithDialog(dao: MeetingDao) {
-    var selectedPerson by remember { mutableStateOf<List<Meeting?>>(null) }
+fun PersonGridWithDialog(meetings:List<Meeting>,meetingDao: MeetingDao) {
+    var selectedMeeting by remember { mutableStateOf<Meeting?>(null) }
 
-    CoroutineScope(Dispatchers.IO).launch {
-        selectedPerson= dao.MeetingAll()
+
+    Column {
+        
+    Button(onClick = { myDatePicker(meetingDao)}) {
+        Text(text = "Add Meeting")
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
         ) {
-            items(people) { person ->
+
+            items(meetings) { meeting ->
                 Column(
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
-                        .clickable { selectedPerson = person }
+                        .clickable { selectedMeeting = meeting }
                 ) {
-                    Text(text = "Name: ${person.name}")
-                    Text(text = "ID: ${person.id}")
+                    Text(text = "Name: ${meeting.name}")
+                    Text(text = "ID: ${meeting.id}")
                 }
             }
         }
+    }
 
         // Show dialog if a person is selected
-        selectedPerson?.let { person ->
+        selectedMeeting?.let { meeting ->
             ScreenDialog(
-                person = person,
-                onDismissRequest = { selectedPerson = null }
+                meeting = meeting,
+                onDismissRequest = { selectedMeeting = null }
             )
         }
 
@@ -78,7 +87,7 @@ fun PersonGridWithDialog(dao: MeetingDao) {
 }
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ScreenDialog(onDismissRequest: () -> Unit, person: Person) {
+fun ScreenDialog(onDismissRequest: () -> Unit, meeting: Meeting) {
     Dialog(
         onDismissRequest = onDismissRequest,
         properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnBackPress = true)
@@ -93,11 +102,11 @@ fun ScreenDialog(onDismissRequest: () -> Unit, person: Person) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(text = person.name, textAlign = TextAlign.Center)
+                Text(text = meeting.name, textAlign = TextAlign.Center)
                 TextButton(onClick = onDismissRequest) {
                     Text("Dismiss")
                 }
-                addEdt(value = person.id.toString(), onValueChange = {})
+                addEdt(value = meeting.id.toString(), onValueChange = {})
                 addEdt(value = "EXX2", onValueChange = {})
             }
         }
