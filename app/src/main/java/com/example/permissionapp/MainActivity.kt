@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 // TimePickerExamples()
                 //screen()
                 // MenusExamples()
-                 //   mainScreen()
+                    mainScreen()
                  //  DialogExamples()
                     myDatePicker(dao)
 

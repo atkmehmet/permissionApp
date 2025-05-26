@@ -29,22 +29,24 @@ import androidx.compose.ui.window.DialogProperties
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
-fun mainScreen(){
-    val persons = listOf(
-        Person(1, "Alice"),
-        Person(2, "Bob"),
-        Person(3, "Charlie")
+fun mainScreen(dao: MeetingDao){
 
-    )
-    PersonGridWithDialog(persons)
+    PersonGridWithDialog(dao)
 }
 
 data class Person(val id: Int, val name: String)
 @Composable
-fun PersonGridWithDialog(people: List<Person>) {
-    var selectedPerson by remember { mutableStateOf<Person?>(null) }
+fun PersonGridWithDialog(dao: MeetingDao) {
+    var selectedPerson by remember { mutableStateOf<List<Meeting?>>(null) }
+
+    CoroutineScope(Dispatchers.IO).launch {
+        selectedPerson= dao.MeetingAll()
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyVerticalGrid(
