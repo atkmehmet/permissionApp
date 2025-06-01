@@ -57,27 +57,13 @@ import kotlin.time.times
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun myDatePicker(dao: MeetingDao){
+fun myDatePicker(dao: MeetingDao,view: MeetingView){
     var showModal by remember { mutableStateOf(false) }
     var showTimeInput by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
     val context = LocalContext.current
 
-    var valueName by remember {
-        mutableStateOf("")
-    }
-    var valueSurName by remember {
-        mutableStateOf("")
-    }
-    var customerHour by remember {
-        mutableStateOf("")
-    }
-    var hourPrice by remember {
-        mutableStateOf("")
-    }
-    var totalPrice by remember {
-        mutableStateOf("0")
-    }
+     val state = view._uistate
 
     var selectedTime :TimePickerState? by remember { mutableStateOf(null) }
     val formatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
@@ -98,7 +84,7 @@ fun myDatePicker(dao: MeetingDao){
     } else {
         timeFormet = "No time selected."
     }
-    totalPrice = ((hourPrice?.toDoubleOrNull() ?: 0.0) * (customerHour?.toDoubleOrNull() ?: 0.0)).toString()
+
 
     Column (modifier = Modifier
         .fillMaxSize()
@@ -134,42 +120,22 @@ fun myDatePicker(dao: MeetingDao){
                 .fillMaxWidth()
                 .height(64.dp)
         )
-        addEdt(value = valueName, onValueChange = {  new -> valueName = new}, label = "Customer Name", placeholder = "Write Customer Name")
-        addEdt(value = valueSurName, onValueChange = {  new -> valueSurName = new}, label = "Customer SurName", placeholder = "Write Customer SurName")
+        addEdt(value = state.driverName, onValueChange ={ view.onNameChange(it)}, label = "Customer Name", placeholder = "Write Customer Name")
+        addEdt(value = state.driverSurName, onValueChange = { view.onSurnameChange(it)}, label = "Customer SurName", placeholder = "Write Customer SurName")
         Row (modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
-            addEdt(value = customerHour, onValueChange = {  new -> customerHour = new},
+            addEdt(value = state.driverHour, onValueChange = {  view.onHourChange(it)},
                 label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, modifier = Modifier.weight(1f))
-            addEdt(value = hourPrice, onValueChange = {  new -> hourPrice = new},
+            addEdt(value = state.hourPrice, onValueChange = {  view.onPriceChange(it)},
                 label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true, modifier = Modifier.weight(1f))
 
         }
 
-        addEdt(value = totalPrice, onValueChange = { },
+        addEdt(value = state.totalPrice, onValueChange = { },
             label = "Total of Price", placeholder = "", numericOnly = true)
 
         Button(onClick = {
-            CoroutineScope(Dispatchers.IO).launch{
-                try {
 
-                    dao.insertMeeting(Meeting(
-                        name = valueName,
-                        surname = valueSurName,
-                        dateMeeting = formattedDate,
-                        meetingDuration = customerHour,
-                        meetingStartTime = timeFormet,
-                        hourPrice = hourPrice
-                    ))
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Saved Meeting", Toast.LENGTH_LONG).show()
-                    }
-                }
-                catch (ex:Exception){
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Error: ${ex.message}", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
         }, modifier = Modifier.align(Alignment.End)) {
             Text(text = "Save Meeting")
         }

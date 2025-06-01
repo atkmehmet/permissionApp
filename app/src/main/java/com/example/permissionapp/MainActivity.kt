@@ -36,9 +36,9 @@ class MainActivity : ComponentActivity() {
                 val db = MeetingDatabase.getDatabase(this)
                 val meetingDao = db.meetingDao()
                 val viewModel = MeetingView(meetingDao)
-                    mainScreen(viewModel,meetingDao)
+                        //  mainScreen(viewModel,meetingDao)
                  //  DialogExamples()
-                myDatePicker(dao)
+                myDatePicker(dao,viewModel)
 
             }
         }
