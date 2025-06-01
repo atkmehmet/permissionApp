@@ -49,7 +49,7 @@ fun PersonGridWithDialog(meetings:List<Meeting>,meetingDao: MeetingDao) {
 
     Column {
         
-    Button(onClick = { myDatePicker(meetingDao)}) {
+    Button(onClick = { }) {
         Text(text = "Add Meeting")
     }
 

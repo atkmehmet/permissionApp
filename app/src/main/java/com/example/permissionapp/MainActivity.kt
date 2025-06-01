@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 val viewModel = MeetingView(meetingDao)
                     mainScreen(viewModel,meetingDao)
                  //  DialogExamples()
-                            //     myDatePicker(dao)
+                myDatePicker(dao)
 
             }
         }
