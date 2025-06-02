@@ -131,11 +131,11 @@ fun myDatePicker(dao: MeetingDao,view: MeetingView){
 
         }
 
-        addEdt(value = state.totalPrice, onValueChange = { },
+        addEdt(value = state.totalPrice, onValueChange = { view.onTotalPrice()},
             label = "Total of Price", placeholder = "", numericOnly = true)
 
         Button(onClick = {
-
+                view.meetingInsert(formattedDate,timeFormet)
         }, modifier = Modifier.align(Alignment.End)) {
             Text(text = "Save Meeting")
         }

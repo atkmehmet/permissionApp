@@ -56,10 +56,10 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
         val hours = _uistate.driverHour?.toDoubleOrNull() ?: 0.0
         val result = price * hours
 
-        _uistate = _uistate.copy(result.toString())
+        _uistate = _uistate.copy( totalPrice =  result.toString())
     }
 
-    fun meetingInsert(){
+    fun meetingInsert(formattedDate:String,timeFormet:String){
         viewModelScope.launch(Dispatchers.IO){
             try {
 
