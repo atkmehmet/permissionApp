@@ -60,19 +60,19 @@ import kotlin.time.times
 fun myDatePicker(dao: MeetingDao,view: MeetingView){
     var showModal by remember { mutableStateOf(false) }
     var showTimeInput by remember { mutableStateOf(false) }
-    val datePickerState = rememberDatePickerState()
+
     val context = LocalContext.current
 
      val state = view._uistate
 
     var selectedTime :TimePickerState? by remember { mutableStateOf(null) }
-    val formatter = remember { SimpleDateFormat("hh:mm a", Locale.getDefault()) }
+    val formatter = remember { SimpleDateFormat("HH:mm", Locale.getDefault()) }
     var selectedDate by remember { mutableStateOf<Long?>(null) }
     var formattedDate =""
     var timeFormet = ""
     if (selectedDate != null) {
         val date = Date(selectedDate!!)
-        formattedDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date)
+        formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
 
     if (selectedTime != null) {
@@ -92,6 +92,7 @@ fun myDatePicker(dao: MeetingDao,view: MeetingView){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally)
     {
+        Text(text = view._uistate.recordCount.toString())
         OutlinedTextField(value = formattedDate ,
             onValueChange = {}
             , label = { Text(text = "Lesson Date")}
@@ -125,13 +126,13 @@ fun myDatePicker(dao: MeetingDao,view: MeetingView){
         Row (modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
             addEdt(value = state.driverHour, onValueChange = {  view.onHourChange(it)},
-                label = "Lesson of Hour", placeholder = "Write Hour", numericOnly = true, modifier = Modifier.weight(1f))
-            addEdt(value = state.hourPrice, onValueChange = {  view.onPriceChange(it)},
+                label = "Hour", placeholder = "Lesson of Hour", numericOnly = true, modifier = Modifier.weight(1f))
+            addEdt(value = state.hourPrice, onValueChange = {  view.onPriceChange(it) },
                 label = "Price of Hour", placeholder = "Lesson of Price", numericOnly = true, modifier = Modifier.weight(1f))
 
         }
 
-        addEdt(value = state.totalPrice, onValueChange = { view.onTotalPrice()},
+        addEdt(value = state.totalPrice, onValueChange = { },
             label = "Total of Price", placeholder = "", numericOnly = true)
 
         Button(onClick = {
@@ -210,27 +211,6 @@ fun InputUseState(
         }
     }
 }
-// [END android_compose_components_input_usestate]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun datePickerShow(
@@ -264,107 +244,3 @@ fun datePickerShow(
         DatePicker(state = datePickerState)
     }
 }
-
-fun convertMillisToTime(millis: Long): String {
-    val formatter = SimpleDateFormat("dd/mm/yyyy", Locale.getDefault())
-    return formatter.format(Date(millis))
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun datePickerRange(){
-
-    var selectedDateRange by remember { mutableStateOf<Pair<Long?, Long?>>(null to null) }
-
-    var modalModalRange by remember {
-        mutableStateOf(false)
-    }
-    var dateRange = ""
-
-    if (selectedDateRange.first != null && selectedDateRange.second != null) {
-        val startDate = Date(selectedDateRange.first!!)
-        val endDate = Date(selectedDateRange.second!!)
-        val formattedStartDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(startDate)
-        val formattedEndDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(endDate)
-        dateRange = "$formattedStartDate-$formattedEndDate"
-    }
-
-    Box (modifier = Modifier.fillMaxWidth()){
-
-        OutlinedTextField(value = dateRange,
-            onValueChange = {},
-            readOnly = true,
-            label = { Text(text = "Please Choose Date Range")},
-            trailingIcon = {
-                IconButton(onClick = { modalModalRange = !modalModalRange }) {
-                    Icon(imageVector =Icons.Default.DateRange , contentDescription = "Select date Range")
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-        )
-    }
-
-    if (modalModalRange) {
-        DateRangePickerModal(
-            onDateRangeSelected = {
-                selectedDateRange = it
-                modalModalRange = false
-            },
-            onDismiss = { modalModalRange = false }
-        )
-    }
-}
-
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-// [START android_compose_components_datepicker_range]
-@Composable
-fun DateRangePicker(
-    onDateRangeSelected: (Pair<Long?, Long?>) -> Unit,
-    onDismiss: () -> Unit
-) {
-    val dateRangePickerState = rememberDateRangePickerState()
-
-    DatePickerDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onDateRangeSelected(
-                        Pair(
-                            dateRangePickerState.selectedStartDateMillis,
-                            dateRangePickerState.selectedEndDateMillis
-                        )
-                    )
-                    onDismiss()
-                }
-            ) {
-                Text("OK")
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
-        }
-    ) {
-        DateRangePicker(
-            state = dateRangePickerState,
-            title = {
-                Text(
-                    text = "Select date range"
-                )
-            },
-            showModeToggle = false,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-                .padding(16.dp)
-        )
-    }
-}
-// [END android_compose_components_datepicker_range]

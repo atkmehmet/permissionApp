@@ -47,9 +47,11 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
 
     fun onHourChange(newHour:String){
         _uistate = _uistate.copy(driverHour = newHour)
+        onTotalPrice()
     }
     fun onPriceChange(newPrice:String){
         _uistate = _uistate.copy(hourPrice = newPrice)
+        onTotalPrice()
     }
     fun onTotalPrice(){
         val price = _uistate.hourPrice?.toDoubleOrNull() ?: 0.0
@@ -71,6 +73,8 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
                     meetingStartTime = timeFormet,
                     hourPrice = _uistate.hourPrice
                 ))
+
+                _uistate = _uistate.copy(recordCount = dao.RecordCount())
 
             }
             catch (ex:Exception){

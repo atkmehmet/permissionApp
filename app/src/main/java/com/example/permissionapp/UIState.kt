@@ -9,5 +9,6 @@ data class UIState (
     val hourPrice:String        = "0",
     val totalPrice:String       = "",
     val driverTime:String       = "",
-    val driverDate:String       = ""
+    val driverDate:String       = "",
+    val recordCount : Int       = 0
 )
