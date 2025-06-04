@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
@@ -35,6 +37,8 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,6 +68,8 @@ fun myDatePicker(dao: MeetingDao,view: MeetingView){
     val context = LocalContext.current
 
      val state = view._uistate
+     val meetings by view.meeting.collectAsState()
+
 
     var selectedTime :TimePickerState? by remember { mutableStateOf(null) }
     val formatter = remember { SimpleDateFormat("HH:mm", Locale.getDefault()) }
@@ -92,6 +98,12 @@ fun myDatePicker(dao: MeetingDao,view: MeetingView){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally)
     {
+        LazyColumn {
+            items(meetings) { meeting ->
+                Text(text = meeting.name) // Customize to your `Meeting` model
+            }
+        }
+
         Text(text = view._uistate.recordCount.toString())
         OutlinedTextField(value = formattedDate ,
             onValueChange = {}
