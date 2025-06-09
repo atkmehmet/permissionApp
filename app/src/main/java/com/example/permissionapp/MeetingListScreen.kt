@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MeetingListScreen(
     meetings: List<Meeting>,
-    onAddMeetingClick: () -> Unit
+    onAddMeetingClick:  () -> Unit
 ) {
     Scaffold(
         floatingActionButton = {

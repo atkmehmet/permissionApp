@@ -37,13 +37,14 @@ class MainActivity : ComponentActivity() {
                 val db = MeetingDatabase.getDatabase(this)
                 val meetingDao = db.meetingDao()
                 val viewModel = MeetingView(meetingDao)
+                AppNavGraph(viewModel = viewModel, dao = meetingDao )
                         //  mainScreen(viewModel,meetingDao)
                  //  DialogExamples()
-                val meetings by viewModel.meeting.collectAsState()
-                myDatePicker(dao,viewModel)
-                MeetingListScreen(meetings = meetings) {
-
-                }
+              //  val meetings by viewModel.meeting.collectAsState()
+                //myDatePicker(dao,viewModel)
+               // MeetingListScreen(meetings = meetings) {
+                 //   myDatePicker(dao,viewModel)
+                //}
 
             }
         }
