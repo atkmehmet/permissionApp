@@ -68,7 +68,7 @@ fun MyDatePicker(view: MeetingView) {
     var showTimePicker by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-    val state = view.uiState
+    val state = view._uistate
     val meetings by view.meeting.collectAsState()
 
     var selectedDate by remember { mutableStateOf<Long?>(null) }
@@ -201,12 +201,13 @@ fun MyDatePicker(view: MeetingView) {
     }
 
     if (showDatePicker) {
+        val datePickerState = rememberDatePickerState()
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        selectedDate = rememberDatePickerState().selectedDateMillis
+                        selectedDate = datePickerState.selectedDateMillis
                         showDatePicker = false
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = Color.White)

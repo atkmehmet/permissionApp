@@ -22,7 +22,7 @@ fun AppNavGraph(viewModel: MeetingView,dao: MeetingDao) {
         }
 
         composable("add_meeting") {
-            myDatePicker(dao,viewModel)
+            MyDatePicker(viewModel)
         }
     }
 }
