@@ -104,13 +104,7 @@ fun MyDatePicker(view: MeetingView) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(meetings) { meeting ->
-                Text(text = meeting.name)
-            }
-        }
 
-        Text(text = state.recordCount.toString())
 
         OutlinedTextField(
             value = formattedDate,
