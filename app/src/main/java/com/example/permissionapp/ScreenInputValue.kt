@@ -193,9 +193,9 @@ fun MyDatePicker(view: MeetingView) {
             Text("Save Meeting")
         }
     }
-
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState()
+
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
@@ -203,8 +203,9 @@ fun MyDatePicker(view: MeetingView) {
                     onClick = {
                         selectedDate = datePickerState.selectedDateMillis
                         showDatePicker = false
+                        Toast.makeText(context, selectedDate.toString(), Toast.LENGTH_SHORT).show()
                     },
-                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White)
+                    colors = ButtonDefaults.textButtonColors(contentColor = Color.Green)
                 ) {
                     Text("OK")
                 }
@@ -212,17 +213,17 @@ fun MyDatePicker(view: MeetingView) {
             dismissButton = {
                 TextButton(
                     onClick = { showDatePicker = false },
-                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White)
+                    colors = ButtonDefaults.textButtonColors(contentColor = Color.Red)
                 ) {
                     Text("Cancel")
                 }
             }
         ) {
-            DatePicker(state = rememberDatePickerState())
+            // Use the SAME datePickerState
+            DatePicker(state = datePickerState)
         }
     }
-
-    if (showTimePicker) {
+   if (showTimePicker) {
         InputUseState(
             onConfirm = {
                 selectedTime = it
