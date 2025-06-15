@@ -10,5 +10,7 @@ data class UIState (
     val totalPrice:String       = "",
     val driverTime:String       = "",
     val driverDate:String       = "",
-    val recordCount : Int       = 0
+    val recordCount : Int       = 0,
+    val isInsert:Boolean        = false
+
 )

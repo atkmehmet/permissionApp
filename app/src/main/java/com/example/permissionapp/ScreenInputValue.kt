@@ -232,6 +232,11 @@ fun MyDatePicker(view: MeetingView) {
             onDismiss = { showTimePicker = false }
         )
     }
+    if (state.isInsert){
+        Toast.makeText(context,"Your Meeting Saved",Toast.LENGTH_SHORT).show()
+        view.onisInsertChange()
+    }
+
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
