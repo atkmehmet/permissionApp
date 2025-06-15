@@ -63,7 +63,7 @@ import kotlin.time.times
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun MyDatePicker(view: MeetingView) {
+fun MyDatePicker(view: MeetingView,onMeetingAd:()-> Unit) {
     var showDatePicker by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
 
@@ -104,7 +104,12 @@ fun MyDatePicker(view: MeetingView) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+       Row(modifier = Modifier.fillMaxWidth()) {
+           Button(onClick = { onMeetingAd() }) {
+               Text(text = "Back")
+           }
 
+       }
 
         OutlinedTextField(
             value = formattedDate,

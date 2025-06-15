@@ -6,7 +6,7 @@ data class UIState (
     val driverName:String       = "",
     val driverSurName:String    = "",
     val driverHour:String       = "",
-    val hourPrice:String        = "0",
+    val hourPrice:String        = "",
     val totalPrice:String       = "",
     val driverTime:String       = "",
     val driverDate:String       = "",

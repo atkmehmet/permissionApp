@@ -12,6 +12,6 @@ interface MeetingDao {
     @Query("SELECT * FROM Meeting")
   suspend  fun MeetingAll():List<Meeting>
 
-  @Query("SELECT COUNT(*) FROM Meeting order by id desc ")
+  @Query("SELECT COUNT(*) FROM Meeting order by id asc ")
   suspend fun RecordCount():Int
 }

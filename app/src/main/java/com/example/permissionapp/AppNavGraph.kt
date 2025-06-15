@@ -22,7 +22,10 @@ fun AppNavGraph(viewModel: MeetingView,dao: MeetingDao) {
         }
 
         composable("add_meeting") {
-            MyDatePicker(viewModel)
+            MyDatePicker(viewModel,
+                onMeetingAd = {
+                    navController.popBackStack()
+                })
         }
     }
 }
