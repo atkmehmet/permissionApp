@@ -240,6 +240,8 @@ fun MyDatePicker(view: MeetingView,onMeetingAd:()-> Unit) {
     if (state.isInsert){
         Toast.makeText(context,"Your Meeting Saved",Toast.LENGTH_SHORT).show()
         view.onisInsertChange()
+        selectedDate = null
+            selectedTime = null
     }
 
 }

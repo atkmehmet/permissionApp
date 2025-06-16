@@ -100,7 +100,8 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
             driverHour = "",
             hourPrice = "",
             driverTime = "",
-            driverDate = ""
+            driverDate = "",
+            totalPrice = ""
         )
     }
 }
