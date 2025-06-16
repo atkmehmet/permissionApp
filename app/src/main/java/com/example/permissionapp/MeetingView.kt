@@ -84,10 +84,23 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
 
                 _uistate = _uistate.copy(recordCount = dao.RecordCount())
                 _uistate = _uistate.copy(isInsert = true)
+                clearValue()
 
             }
             catch (ex:Exception){
             }
         }
+    }
+
+
+    fun clearValue(){
+        _uistate = _uistate.copy(
+            driverName = "",
+            driverSurName = "",
+            driverHour = "",
+            hourPrice = "",
+            driverTime = "",
+            driverDate = ""
+        )
     }
 }
