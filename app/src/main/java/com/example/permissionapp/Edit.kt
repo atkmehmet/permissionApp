@@ -94,7 +94,9 @@ fun addEdt(
                     onValueChange(newValue)
                 }
             },
+
             label = { Text(label) },
+
             placeholder = { Text(placeholder) },
             leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null) },
             trailingIcon = {
@@ -112,6 +114,13 @@ fun addEdt(
             ),
             modifier = fieldModifier
         )
+        if (value.isEmpty()){
+            Text(
+                text = "Field cannot be empty",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
 
         Spacer(modifier = Modifier.height(4.dp))
 
@@ -120,6 +129,7 @@ fun addEdt(
             color = if (isError) Color.Red else Color.Gray,
             fontSize = 12.sp
         )
+
     }
 }
 
