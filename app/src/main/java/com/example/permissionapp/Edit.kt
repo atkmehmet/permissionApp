@@ -125,7 +125,7 @@ fun addEdt(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = if (isError) "Maksimum $maxChar karaktere izin veriliyor" else helperText,
+            text = if (isError) "Maksimum $maxChar karakter izin veriliyor" else helperText,
             color = if (isError) Color.Red else Color.Gray,
             fontSize = 12.sp
         )
