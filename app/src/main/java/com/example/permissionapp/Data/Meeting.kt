@@ -1,4 +1,4 @@
-package com.example.permissionapp
+package com.example.permissionapp.Data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

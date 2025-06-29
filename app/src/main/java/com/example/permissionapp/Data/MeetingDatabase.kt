@@ -1,4 +1,4 @@
-package com.example.permissionapp
+package com.example.permissionapp.Data
 
 import android.content.Context
 import androidx.room.Database
@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [Meeting::class], version = 1)
 abstract class MeetingDatabase:RoomDatabase() {
 
-    abstract fun meetingDao():MeetingDao
+    abstract fun meetingDao(): MeetingDao
 
     companion object {
         @Volatile private var INSTANCE: MeetingDatabase? = null

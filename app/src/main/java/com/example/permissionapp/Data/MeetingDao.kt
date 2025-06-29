@@ -1,4 +1,4 @@
-package com.example.permissionapp
+package com.example.permissionapp.Data
 
 import androidx.room.Dao
 import androidx.room.Insert

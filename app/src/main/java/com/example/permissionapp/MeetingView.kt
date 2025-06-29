@@ -1,17 +1,16 @@
 package com.example.permissionapp
 
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
+import com.example.permissionapp.Data.Meeting
+import com.example.permissionapp.Data.MeetingDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MeetingView(private val dao: MeetingDao):ViewModel() {
 
@@ -73,14 +72,16 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
         viewModelScope.launch(Dispatchers.IO){
             try {
 
-                dao.insertMeeting(Meeting(
+                dao.insertMeeting(
+                    Meeting(
                     name = _uistate.driverName,
                     surname = _uistate.driverSurName,
                     dateMeeting = formattedDate,
                     meetingDuration = _uistate.driverHour,
                     meetingStartTime = timeFormet,
                     hourPrice = _uistate.hourPrice
-                ))
+                )
+                )
 
                 _uistate = _uistate.copy(recordCount = dao.RecordCount())
                 _uistate = _uistate.copy(isInsert = true)
