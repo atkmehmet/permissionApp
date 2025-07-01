@@ -1,4 +1,4 @@
-package com.example.permissionapp.Data
+package com.example.permissionapp.Data.local
 
 import android.content.Context
 import androidx.room.Database

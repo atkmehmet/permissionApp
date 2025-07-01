@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import androidx.navigation.compose.rememberNavController
-import com.example.permissionapp.Data.MeetingDao
+import com.example.permissionapp.Data.local.MeetingDao
 
 @Composable
 fun AppNavGraph(viewModel: MeetingView,dao: MeetingDao) {

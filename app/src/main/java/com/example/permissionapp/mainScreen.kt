@@ -29,8 +29,8 @@ import androidx.compose.ui.window.DialogProperties
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import com.example.permissionapp.Data.Meeting
-import com.example.permissionapp.Data.MeetingDao
+import com.example.permissionapp.Data.local.Meeting
+import com.example.permissionapp.Data.local.MeetingDao
 
 @Composable
 fun mainScreen(view: MeetingView,meetingDao: MeetingDao){

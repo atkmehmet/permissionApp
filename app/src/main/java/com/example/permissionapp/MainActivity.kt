@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.permissionapp.Data.MeetingDatabase
+import com.example.permissionapp.Data.local.MeetingDatabase
 import com.example.permissionapp.ui.theme.PermissionAppTheme
 
 class MainActivity : ComponentActivity() {

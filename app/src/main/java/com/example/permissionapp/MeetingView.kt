@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.permissionapp.Data.Meeting
-import com.example.permissionapp.Data.MeetingDao
+import com.example.permissionapp.Data.local.Meeting
+import com.example.permissionapp.Data.local.MeetingDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
