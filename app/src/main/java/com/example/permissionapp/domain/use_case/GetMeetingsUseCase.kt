@@ -6,5 +6,4 @@ import com.example.permissionapp.domain.repository.MeetingRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetMeetingsUseCase(private val repository: MeetingRepository) {
-    operator fun invoke (): Flow<List<Meeting>> = repository.getAllMeetings()
-}
+    operator fun invoke (): Flow<List<Meeting>> = repository.getAllMeetin
