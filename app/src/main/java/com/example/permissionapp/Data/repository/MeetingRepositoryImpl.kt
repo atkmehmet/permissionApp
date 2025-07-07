@@ -12,12 +12,12 @@ class MeetingRepositoryImpl(
 
  override   suspend fun getMeetings(): Flow<List<Meeting>> {
         return dao.MeetingAll().map { list ->
-            list.map { Meeting(it.id, it.name, it.meetingStartTime) }
+            list.map { Meeting(it.name, it.surname, it.dateMeeting,it.meetingStartTime,it.meetingDuration,it.hourPrice) }
         }
     }
 
     override suspend fun addMeeting(meeting: Meeting) {
-        val entity = MeetingEntity(title = meeting.title, date = meeting.date)
+        val entity = MeetingEntity(name = meeting.name, meetingStartTime = meeting.meetingStartTime, meetingDuration = meeting.meetingDuration, dateMeeting = meeting.dateMeeting, hourPrice = meeting.hourPrice, surname = meeting.surname)
         dao.insertMeeting(entity)
     }
 }

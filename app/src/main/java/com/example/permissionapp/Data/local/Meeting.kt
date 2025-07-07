@@ -3,7 +3,7 @@ package com.example.permissionapp.Data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Meeting")
+@Entity(tableName = "MeetingEntity")
 data class MeetingEntity (
 
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
