@@ -24,12 +24,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.permissionapp.Data.local.Meeting
+import com.example.permissionapp.Data.local.MeetingEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MeetingListScreen(
-    meetings: List<Meeting>,
+    meetings: List<MeetingEntity>,
     onAddMeetingClick:  () -> Unit
 ) {
     Scaffold(
@@ -62,7 +62,7 @@ fun MeetingListScreen(
 }
 
 @Composable
-fun MeetingCard(meeting: Meeting) {
+fun MeetingCard(meeting: MeetingEntity) {
     Card(
         modifier = Modifier
             .padding(12.dp)

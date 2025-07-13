@@ -10,9 +10,9 @@ interface MeetingDao {
     @Insert
   suspend  fun insertMeeting(meeting: MeetingEntity)
 
-    @Query("SELECT * FROM Meeting")
-  suspend  fun MeetingAll():Flow<List<MeetingEntity>>
+    @Query("SELECT * FROM MeetingEntity")
+    fun MeetingAll():Flow<List<MeetingEntity>>
 
-  @Query("SELECT COUNT(*) FROM Meeting order by id asc ")
+  @Query("SELECT COUNT(*) FROM MeetingEntity order by id asc ")
   suspend fun RecordCount():Int
 }

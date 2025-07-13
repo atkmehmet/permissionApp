@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.permissionapp.Data.local.Meeting
+import com.example.permissionapp.Data.local.MeetingEntity
 import com.example.permissionapp.Data.local.MeetingDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,8 +17,8 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
      var _uistate by mutableStateOf(UIState())
          private set
 
-     private val _meeting = MutableStateFlow<List<Meeting>>(emptyList())
-     val meeting: StateFlow<List<Meeting>> = _meeting
+     private val _meeting = MutableStateFlow<List<MeetingEntity>>(emptyList())
+     val meeting: StateFlow<List<MeetingEntity>> = _meeting
 
     init {
         loadMeeting()
