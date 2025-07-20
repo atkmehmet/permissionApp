@@ -26,7 +26,7 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
 
     fun loadMeeting() {
         viewModelScope.launch {
-            _meeting.value = dao.MeetingAll()
+           // _meeting.value = dao.MeetingAll()
         }
     }
 
@@ -72,7 +72,7 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
         viewModelScope.launch(Dispatchers.IO){
             try {
 
-                dao.insertMeeting(
+             /*   dao.insertMeeting(
                     Meeting(
                     name = _uistate.driverName,
                     surname = _uistate.driverSurName,
@@ -81,11 +81,13 @@ class MeetingView(private val dao: MeetingDao):ViewModel() {
                     meetingStartTime = timeFormet,
                     hourPrice = _uistate.hourPrice
                 )
+
                 )
 
                 _uistate = _uistate.copy(recordCount = dao.RecordCount())
                 _uistate = _uistate.copy(isInsert = true)
                 clearValue()
+                  */
 
             }
             catch (ex:Exception){
