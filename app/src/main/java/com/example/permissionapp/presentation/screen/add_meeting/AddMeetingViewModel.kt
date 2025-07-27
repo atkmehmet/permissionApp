@@ -4,13 +4,13 @@ package com.example.permissionapp.presentation.screen.add_meeting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.permissionapp.domain.model.Meeting
-import com.example.permissionapp.domain.use_case.AddMeetingUseCase
+import com.example.permissionapp.domain.use_case.GetMeetingsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class AddMeetingViewModel(
-    private val addMeetingUseCase: AddMeetingUseCase
+    private val addMeetingUseCase: GetMeetingsUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AddMeetingState())
