@@ -28,7 +28,7 @@ class AddMeetingViewModel(
         viewModelScope.launch {
             try {
                 _state.value = _state.value.copy(isSaving = true)
-                val meeting = Meeting(id = 0, title = state.value.title, date = state.value.date)
+                val meeting = Meeting(name = "", surname = "", meetingDuration = "", dateMeeting = "", meetingStartTime = "", hourPrice = "")
                 addMeetingUseCase(meeting)
                 _state.value = _state.value.copy(isSaving = false, success = true)
             } catch (e: Exception) {
